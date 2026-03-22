@@ -6,11 +6,14 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMessages,
   ],
 });
 
-// ─── Configuration ───────────────────────────────────────────────────────────
+// ─── Configuration ────────────────────────────────────────────────────────────
 const GUILD_ID = '1432472817005236326';
+const PREFIX   = '!';
 
 const DM_CONFIGS = {
   dm_test: {
@@ -106,7 +109,7 @@ const DM_CONFIGS = {
   },
 };
 
-// ─── Build the panel embed + rows ────────────────────────────────────────────
+// ─── Build panel embed + boutons ─────────────────────────────────────────────
 function buildPanel() {
   const embed = new EmbedBuilder()
     .setTitle('DM All')
@@ -116,10 +119,10 @@ function buildPanel() {
   const keys = Object.keys(DM_CONFIGS);
   const rows = [];
 
+  // Rangées des 13 boutons normaux (5 max par rangée)
   for (let i = 0; i < keys.length; i += 5) {
     const row = new ActionRowBuilder();
-    const slice = keys.slice(i, i + 5);
-    for (const key of slice) {
+    for (const key of keys.slice(i, i + 5)) {
       const cfg = DM_CONFIGS[key];
       row.addComponents(
         new ButtonBuilder()
@@ -131,50 +134,55 @@ function buildPanel() {
     rows.push(row);
   }
 
+  // Dernière rangée : bouton Urgence All seul
+  const urgenceRow = new ActionRowBuilder().addComponents(
+    new ButtonBuilder()
+      .setCustomId('dm_urgence_all')
+      .setLabel('🚨 Urgence All')
+      .setStyle(ButtonStyle.Danger)
+  );
+  rows.push(urgenceRow);
+
   return { embed, rows };
 }
 
-// ─── Helper : vérifie que c'est le proprio (couronne) ────────────────────────
-function isOwner(interaction) {
-  return interaction.guild.ownerId === interaction.user.id;
+// ─── Vérifie que c'est le proprio (couronne) ─────────────────────────────────
+function isOwner(guildOwnerId, userId) {
+  return guildOwnerId === userId;
 }
 
-// ─── Slash command to spawn the panel ────────────────────────────────────────
-client.once('ready', async () => {
+// ─── Ready ────────────────────────────────────────────────────────────────────
+client.once('ready', () => {
   console.log(`✅ Connecté en tant que ${client.user.tag}`);
-
-  await client.application.commands.create({
-    name: 'dmall',
-    description: 'Affiche le panel DM All (propriétaire uniquement)',
-  });
-
-  console.log('✅ Commande /dmall enregistrée');
 });
 
-// ─── Handle interactions ──────────────────────────────────────────────────────
-client.on('interactionCreate', async (interaction) => {
+// ─── Commande !dmall ──────────────────────────────────────────────────────────
+client.on('messageCreate', async (message) => {
+  if (message.author.bot) return;
+  if (!message.guild) return;
+  if (!message.content.startsWith(PREFIX)) return;
 
-  // ── /dmall command ──
-  if (interaction.isChatInputCommand() && interaction.commandName === 'dmall') {
-    if (!isOwner(interaction)) {
-      return interaction.reply({
-        content: '❌ Seul le propriétaire du serveur 👑 peut utiliser cette commande.',
-        ephemeral: true,
-      });
-    }
+  const command = message.content.slice(PREFIX.length).trim().toLowerCase();
+  if (command !== 'dmall') return;
 
-    const { embed, rows } = buildPanel();
-    await interaction.reply({ embeds: [embed], components: rows });
-    return;
+  if (!isOwner(message.guild.ownerId, message.author.id)) {
+    return message.reply('❌ Seul le propriétaire du serveur 👑 peut utiliser cette commande.');
   }
 
-  // ── Boutons ──
+  const { embed, rows } = buildPanel();
+  await message.channel.send({ embeds: [embed], components: rows });
+
+  // Supprime le message de commande pour garder le chat propre
+  await message.delete().catch(() => {});
+});
+
+// ─── Boutons ──────────────────────────────────────────────────────────────────
+client.on('interactionCreate', async (interaction) => {
   if (!interaction.isButton()) return;
 
-  const config = DM_CONFIGS[interaction.customId];
-  if (!config) return;
+  const { customId } = interaction;
 
-  if (!isOwner(interaction)) {
+  if (!isOwner(interaction.guild.ownerId, interaction.user.id)) {
     return interaction.reply({
       content: '❌ Seul le propriétaire du serveur 👑 peut utiliser ces boutons.',
       ephemeral: true,
@@ -186,6 +194,33 @@ client.on('interactionCreate', async (interaction) => {
   try {
     const guild = await client.guilds.fetch(GUILD_ID);
     await guild.members.fetch();
+
+    // ── Urgence All : DM tout le monde ──
+    if (customId === 'dm_urgence_all') {
+      const members = guild.members.cache.filter((m) => !m.user.bot);
+      let success = 0;
+      let failed = 0;
+
+      for (const [, member] of members) {
+        try {
+          await member.send(
+            `${member.toString()} 🚨 **URGENCE** 🚨 — Un message urgent vient d'être envoyé sur **Topia FR RP**. Connecte-toi dès que possible ! https://discord.com/channels/1432472817005236326`
+          );
+          success++;
+          await new Promise((r) => setTimeout(r, 500));
+        } catch {
+          failed++;
+        }
+      }
+
+      return interaction.editReply({
+        content: `🚨 **Urgence All terminé !**\n📨 **Succès :** ${success}\n❌ **Échecs (DMs fermés) :** ${failed}\n👥 **Total ciblé :** ${members.size}`,
+      });
+    }
+
+    // ── Boutons normaux ──
+    const config = DM_CONFIGS[customId];
+    if (!config) return interaction.editReply({ content: '❌ Bouton inconnu.' });
 
     const members = guild.members.cache.filter(
       (m) => m.roles.cache.has(config.roleId) && !m.user.bot
@@ -207,6 +242,7 @@ client.on('interactionCreate', async (interaction) => {
     await interaction.editReply({
       content: `✅ DMs envoyés !\n📨 **Succès :** ${success}\n❌ **Échecs (DMs fermés) :** ${failed}\n👥 **Total ciblé :** ${members.size}`,
     });
+
   } catch (err) {
     console.error(err);
     await interaction.editReply({ content: `❌ Une erreur est survenue : ${err.message}` });
