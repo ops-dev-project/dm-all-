@@ -20,91 +20,91 @@ const DM_CONFIGS = {
     label: '📢 DM Test',
     roleId: '1485339839480991976',
     message: (mention) =>
-      `${mention} Salut, je souhaite pas te déranger mais une nouvelle annonce test est apparu sur Topia FR RP donc n'hésite pas à allez voir ! https://discord.com/channels/1432472817005236326/1485340839839404042`,
+      `👋 ${mention}\n\nSalut ! Je ne souhaite pas te déranger, mais une nouvelle annonce test vient d'apparaître sur **Topia FR RP** 📢\nN'hésite pas à aller y jeter un œil ! 👀\n\n🔗 https://discord.com/channels/1432472817005236326/1485340839839404042`,
     style: ButtonStyle.Secondary,
   },
   dm_update: {
     label: '🔧 DM Update',
     roleId: '1481277922508669008',
     message: (mention) =>
-      `${mention} Salut, je souhaite pas te déranger mais une nouvelle update est apparu sur Topia FR RP donc n'hésite pas à allez voir ! https://discord.com/channels/1432472817005236326/1455549648742649916`,
+      `👋 ${mention}\n\nSalut ! Je ne souhaite pas te déranger, mais une nouvelle mise à jour vient d'apparaître sur **Topia FR RP** 🔧✨\nN'hésite pas à aller découvrir les nouveautés ! 🚀\n\n🔗 https://discord.com/channels/1432472817005236326/1455549648742649916`,
     style: ButtonStyle.Primary,
   },
   dm_annonce: {
     label: '📣 DM Annonce',
     roleId: '1481278248737443890',
     message: (mention) =>
-      `${mention} Salut, je souhaite pas te déranger mais une nouvelle annonce est apparu sur Topia FR RP donc n'hésite pas à allez voir ! https://discord.com/channels/1432472817005236326/1432477328918970459`,
+      `👋 ${mention}\n\nSalut ! Je ne souhaite pas te déranger, mais une nouvelle annonce vient d'apparaître sur **Topia FR RP** 📣\nN'hésite pas à aller la consulter ! 👇\n\n🔗 https://discord.com/channels/1432472817005236326/1432477328918970459`,
     style: ButtonStyle.Primary,
   },
   dm_partenariat: {
     label: '🤝 DM Partenariat',
     roleId: '1481277964233736202',
     message: (mention) =>
-      `${mention} Salut, je souhaite pas te déranger mais un nouveau partenariat est apparu sur Topia FR RP donc n'hésite pas à allez voir ! https://discord.com/channels/1432472817005236326/1433843875826634903`,
+      `👋 ${mention}\n\nSalut ! Je ne souhaite pas te déranger, mais un nouveau partenariat vient d'être annoncé sur **Topia FR RP** 🤝🎉\nN'hésite pas à aller voir ça ! 👀\n\n🔗 https://discord.com/channels/1432472817005236326/1433843875826634903`,
     style: ButtonStyle.Success,
   },
   dm_event: {
     label: '🎉 DM Event',
     roleId: '1481399298653421618',
     message: (mention) =>
-      `${mention} Salut, je souhaite pas te déranger mais un nouvelle évènement est apparu sur Topia FR RP donc n'hésite pas à allez voir ! https://discord.com/channels/1432472817005236326/1475852783818379406`,
+      `👋 ${mention}\n\nSalut ! Je ne souhaite pas te déranger, mais un nouvel évènement vient d'être publié sur **Topia FR RP** 🎉🎊\nN'hésite pas à participer ! 🙌\n\n🔗 https://discord.com/channels/1432472817005236326/1475852783818379406`,
     style: ButtonStyle.Success,
   },
   dm_giveway: {
     label: '🎁 DM Giveway',
     roleId: '1481278404845109340',
     message: (mention) =>
-      `${mention} Salut, je souhaite pas te déranger mais un nouveau giveway est apparu sur Topia FR RP donc n'hésite pas à allez voir ! https://discord.com/channels/1432472817005236326/1461368197386207404`,
+      `👋 ${mention}\n\nSalut ! Je ne souhaite pas te déranger, mais un nouveau giveaway vient d'être lancé sur **Topia FR RP** 🎁🍀\nTente ta chance, ça ne coûte rien ! 😄\n\n🔗 https://discord.com/channels/1432472817005236326/1461368197386207404`,
     style: ButtonStyle.Success,
   },
   dm_leak: {
     label: '🔒 DM Leak',
     roleId: '1474488055007154196',
     message: (mention) =>
-      `${mention} Salut, je souhaite pas te déranger mais un nouveau leak est apparu sur Topia FR RP donc n'hésite pas à allez voir ! https://discord.com/channels/1432472817005236326/1433024837848137799`,
+      `👋 ${mention}\n\nSalut ! Je ne souhaite pas te déranger, mais un nouveau leak vient d'apparaître sur **Topia FR RP** 🔒🕵️\nViens voir en avant-première ! 👀🤫\n\n🔗 https://discord.com/channels/1432472817005236326/1433024837848137799`,
     style: ButtonStyle.Danger,
   },
   dm_candid_modo: {
     label: '🛡️ DM Candid Modo',
     roleId: '1481277169949868094',
     message: (mention) =>
-      `${mention} Salut, je souhaite pas te déranger mais une nouvelle campagne recrutement de modérateurs est apparu sur Topia FR RP donc n'hésite pas à allez voir ! https://discord.com/channels/1432472817005236326/1432477328918970459`,
+      `👋 ${mention}\n\nSalut ! Je ne souhaite pas te déranger, mais une nouvelle campagne de recrutement de **modérateurs** vient d'être lancée sur **Topia FR RP** 🛡️⚔️\nTu penses avoir le profil ? Viens postuler ! 💪\n\n🔗 https://discord.com/channels/1432472817005236326/1432477328918970459`,
     style: ButtonStyle.Primary,
   },
   dm_candid_support: {
     label: '🎧 DM Candid Support',
     roleId: '1481277274505613403',
     message: (mention) =>
-      `${mention} Salut, je souhaite pas te déranger mais une nouvelle campagne recrutement de supports / helpeurs est apparu sur Topia FR RP donc n'hésite pas à allez voir ! https://discord.com/channels/1432472817005236326/1432477328918970459`,
+      `👋 ${mention}\n\nSalut ! Je ne souhaite pas te déranger, mais une nouvelle campagne de recrutement de **supports / helpers** vient d'être lancée sur **Topia FR RP** 🎧🤗\nTu aimes aider les autres ? Viens postuler ! 💪\n\n🔗 https://discord.com/channels/1432472817005236326/1432477328918970459`,
     style: ButtonStyle.Primary,
   },
   dm_candid_dev: {
     label: '💻 DM Candid Dev',
     roleId: '1481277768498155540',
     message: (mention) =>
-      `${mention} Salut, je souhaite pas te déranger mais une nouvelle campagne recrutement de devellopeurs est apparu sur Topia FR RP donc n'hésite pas à allez voir ! https://discord.com/channels/1432472817005236326/1432477328918970459`,
+      `👋 ${mention}\n\nSalut ! Je ne souhaite pas te déranger, mais une nouvelle campagne de recrutement de **développeurs** vient d'être lancée sur **Topia FR RP** 💻⚙️\nTu codes ? Viens rejoindre l'équipe ! 🚀\n\n🔗 https://discord.com/channels/1432472817005236326/1432477328918970459`,
     style: ButtonStyle.Primary,
   },
   dm_candid_testers: {
     label: '🧪 DM Candid Testers',
     roleId: '1481278994002215105',
     message: (mention) =>
-      `${mention} Salut, je souhaite pas te déranger mais une nouvelle campagne recrutement de testers est apparu sur Topia FR RP donc n'hésite pas à allez voir ! https://discord.com/channels/1432472817005236326/1432477328918970459`,
+      `👋 ${mention}\n\nSalut ! Je ne souhaite pas te déranger, mais une nouvelle campagne de recrutement de **testeurs** vient d'être lancée sur **Topia FR RP** 🧪🔍\nTu veux tester en avant-première ? Viens postuler ! 🎯\n\n🔗 https://discord.com/channels/1432472817005236326/1432477328918970459`,
     style: ButtonStyle.Secondary,
   },
   dm_candid_videastes: {
     label: '🎥 DM Candid Vidéastes',
     roleId: '1481277267429822514',
     message: (mention) =>
-      `${mention} Salut, je souhaite pas te déranger mais une nouvelle campagne recrutement de Vidéaste est apparu sur Topia FR RP donc n'hésite pas à allez voir ! https://discord.com/channels/1432472817005236326/1432477328918970459`,
+      `👋 ${mention}\n\nSalut ! Je ne souhaite pas te déranger, mais une nouvelle campagne de recrutement de **vidéastes** vient d'être lancée sur **Topia FR RP** 🎥🎬\nTu crées du contenu ? Viens rejoindre l'aventure ! 🌟\n\n🔗 https://discord.com/channels/1432472817005236326/1432477328918970459`,
     style: ButtonStyle.Secondary,
   },
   dm_recrutement_rp: {
     label: '🎮 DM Recrutement Accès RP',
     roleId: '1481277817005146234',
     message: (mention) =>
-      `${mention} Salut, je souhaite pas te déranger mais une nouvelle campagne recrutements d'Accès RP est apparu sur Topia FR RP donc n'hésite pas à allez voir ! https://discord.com/channels/1432472817005236326/1432477328918970459`,
+      `👋 ${mention}\n\nSalut ! Je ne souhaite pas te déranger, mais une nouvelle campagne de recrutement pour l'**Accès RP** vient d'être lancée sur **Topia FR RP** 🎮🗺️\nTu veux rejoindre le RP ? Viens postuler ! 🏆\n\n🔗 https://discord.com/channels/1432472817005236326/1432477328918970459`,
     style: ButtonStyle.Danger,
   },
 };
@@ -119,7 +119,6 @@ function buildPanel() {
   const keys = Object.keys(DM_CONFIGS);
   const rows = [];
 
-  // Rangées des 13 boutons normaux (5 max par rangée)
   for (let i = 0; i < keys.length; i += 5) {
     const row = new ActionRowBuilder();
     for (const key of keys.slice(i, i + 5)) {
@@ -171,8 +170,6 @@ client.on('messageCreate', async (message) => {
 
   const { embed, rows } = buildPanel();
   await message.channel.send({ embeds: [embed], components: rows });
-
-  // Supprime le message de commande pour garder le chat propre
   await message.delete().catch(() => {});
 });
 
@@ -204,7 +201,7 @@ client.on('interactionCreate', async (interaction) => {
       for (const [, member] of members) {
         try {
           await member.send(
-            `${member.toString()} 🚨 **URGENCE** 🚨 — Un message urgent vient d'être envoyé sur **Topia FR RP**. Connecte-toi dès que possible ! https://discord.com/channels/1432472817005236326`
+            `🚨 ${member.toString()}\n\n**URGENCE — Topia FR RP**\n\nUn message urgent vient d'être publié sur le serveur ! Connecte-toi dès que possible. ⚠️🔔\n\n🔗 https://discord.com/channels/1432472817005236326`
           );
           success++;
           await new Promise((r) => setTimeout(r, 500));
