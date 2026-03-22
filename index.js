@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 require('dotenv').config();
 
 const client = new Client({
@@ -116,7 +116,6 @@ function buildPanel() {
   const keys = Object.keys(DM_CONFIGS);
   const rows = [];
 
-  // Discord allows max 5 buttons per row, max 5 rows
   for (let i = 0; i < keys.length; i += 5) {
     const row = new ActionRowBuilder();
     const slice = keys.slice(i, i + 5);
@@ -135,25 +134,33 @@ function buildPanel() {
   return { embed, rows };
 }
 
+// ─── Helper : vérifie que c'est le proprio (couronne) ────────────────────────
+function isOwner(interaction) {
+  return interaction.guild.ownerId === interaction.user.id;
+}
+
 // ─── Slash command to spawn the panel ────────────────────────────────────────
 client.once('ready', async () => {
   console.log(`✅ Connecté en tant que ${client.user.tag}`);
 
-  // Register the /dmall slash command
   await client.application.commands.create({
     name: 'dmall',
-    description: 'Affiche le panel DM All',
+    description: 'Affiche le panel DM All (propriétaire uniquement)',
   });
 
   console.log('✅ Commande /dmall enregistrée');
 });
 
-// ─── Handle slash command ─────────────────────────────────────────────────────
+// ─── Handle interactions ──────────────────────────────────────────────────────
 client.on('interactionCreate', async (interaction) => {
+
   // ── /dmall command ──
   if (interaction.isChatInputCommand() && interaction.commandName === 'dmall') {
-    if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
-      return interaction.reply({ content: '❌ Tu dois être administrateur pour utiliser cette commande.', ephemeral: true });
+    if (!isOwner(interaction)) {
+      return interaction.reply({
+        content: '❌ Seul le propriétaire du serveur 👑 peut utiliser cette commande.',
+        ephemeral: true,
+      });
     }
 
     const { embed, rows } = buildPanel();
@@ -161,24 +168,27 @@ client.on('interactionCreate', async (interaction) => {
     return;
   }
 
-  // ── Button interactions ──
+  // ── Boutons ──
   if (!interaction.isButton()) return;
 
   const config = DM_CONFIGS[interaction.customId];
   if (!config) return;
 
-  if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
-    return interaction.reply({ content: '❌ Tu dois être administrateur pour utiliser ce bouton.', ephemeral: true });
+  if (!isOwner(interaction)) {
+    return interaction.reply({
+      content: '❌ Seul le propriétaire du serveur 👑 peut utiliser ces boutons.',
+      ephemeral: true,
+    });
   }
 
   await interaction.deferReply({ ephemeral: true });
 
   try {
     const guild = await client.guilds.fetch(GUILD_ID);
-    await guild.members.fetch(); // fetch all members
+    await guild.members.fetch();
 
-    const members = guild.members.cache.filter((m) =>
-      m.roles.cache.has(config.roleId) && !m.user.bot
+    const members = guild.members.cache.filter(
+      (m) => m.roles.cache.has(config.roleId) && !m.user.bot
     );
 
     let success = 0;
@@ -188,7 +198,6 @@ client.on('interactionCreate', async (interaction) => {
       try {
         await member.send(config.message(member.toString()));
         success++;
-        // Small delay to avoid rate limits
         await new Promise((r) => setTimeout(r, 500));
       } catch {
         failed++;
